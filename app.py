@@ -1,5 +1,5 @@
 # Graphplotter service consists of two parts:
-#   app.py is the front end web interface
+#   app.py is the Flask front end web interface
 #   plotlyanalyzer.py is the backend script that parses the logs and builds plotly graphs in html format
 #       that is displayed by the front end
 

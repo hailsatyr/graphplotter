@@ -1,16 +1,27 @@
+# This backend code uses 3 main modules:
+#   1. re       - for parsing log files with data
+#   2. pandas   - for structuring parsed data into dataframes
+#   3. plotly   - for building graphs based on dataframes
+
 import pandas as pd
 import re
 import plotly.graph_objects as go
 from datetime import datetime as dt
-import zoneinfo
-import os
 import plotly.io as pio
 
+# Define constants with regex patterns that parse the data
 TPT_REGEX = r"(\|\s+\d+\s+\|\s+\w+\s+\|\s+\d+\s+\|.*\|)"
 LINK_REGEX = r"(\|\s+\d+\s+\|\s+\d+\s+\|.+\|\s+\d+\s+\|)"
 IPERF_REGEX = r"(\d+\.\d+)-.+\s+(\d+)\s+"
 
-def plot_tpt(logfile, direction="DL", outlier_control=10):
+def plot_tpt(logfile: str, outlier_control: str = 10) -> go.Figure:
+    '''Parses and builds DU nrcli `ue show rate` plots.
+
+    :param logfile: Input logfile
+    :type logfile: str
+    :param outlier_control: Smoothing the outliers using median. The higher the number, the stronger the effect is. (default is 10)
+    :type outlier_control: int
+    '''
     header = [
         "UE-ID", "RB-ID", "PCELL-ID", "DL-TPT (Mb)", "UL-TPT (Mb)", 
         "DL-PKT-RX", "RLC-DL-TPT (Mb)", "RLC-UL-TPT (Mb)", 
@@ -56,7 +67,12 @@ def plot_tpt(logfile, direction="DL", outlier_control=10):
 
     return fig
 
-def plot_link(logfile):
+def plot_link(logfile: str) -> go.Figure:
+    '''Parses and builds DU nrcli `ue show link` plots.
+
+    :param logfile: Input logfile
+    :type logfile: str
+    '''
     header = [
         "RNTI", "CELL-ID", "DL-BLER% CW-0/1", "RI RX/UL/DL", "DL-CQI CW-0/1",
         "DL-MCS CW-0/1", "256QAM Alloc", "SMALL ALLOC", "UL-BLER-CRC% PER", 
@@ -109,7 +125,14 @@ def plot_link(logfile):
 
     return fig
 
-def plot_iperf(logfile, outlier_control=20):
+def plot_iperf(logfile: str, outlier_control: int = 20) -> go.Figure:
+    '''Parses and builds DU nrcli `ue show rate` plots.
+
+    :param logfile: Input logfile
+    :type logfile: str
+    :param outlier_control: Smoothing the outliers using median. The higher the number, the stronger the effect is. (default is 20)
+    :type outlier_control: int
+    '''
     iperf_data, timestamps = [], []
 
     with open(logfile, "r", errors="ignore") as file:
@@ -137,7 +160,13 @@ def plot_iperf(logfile, outlier_control=20):
 
     return fig
 
-def identify_log_type(logfile):
+def identify_log_type(logfile: str) -> str:
+    '''Identifies the type of uploaded log based on which regex pattern has
+    the most matches.
+    
+    :return: String with the name of a pattern which has the most matches.
+    :rtype: str
+    '''
     counters = {
         "tpt": 0,
         "link": 0,
@@ -145,6 +174,7 @@ def identify_log_type(logfile):
     }
     with open(logfile, "r", errors="ignore") as file:
         text = file.readlines()
+    # Try each pattern on every line and count the number of matches.
     for line in text:
         tpt_regexp = re.search(TPT_REGEX, line)
         link_regexp = re.search(LINK_REGEX, line)
@@ -157,17 +187,25 @@ def identify_log_type(logfile):
             counters["iperf"] += 1
     return max(counters, key=counters.get)
 
-def process_text_file(logfile):
+def process_text_file(logfile: str) -> str:
+    '''Main function called by the frontend. It orchestrates all the other functions in this code to identify the uploaded log type, parse it and build a plot.
+    
+    :return: HTML code with a plot
+    :rtype: str
+    '''
+
+    # First identify what type of log it is and call the relevant parser/plotter on it
     logfile_path = f'uploads/{logfile}'
     log_type = identify_log_type(logfile_path)
     
     if log_type == "tpt":
-        fig = plot_tpt(logfile_path, direction="DL", outlier_control=5)
+        fig = plot_tpt(logfile_path, outlier_control=5)
     elif log_type == "link":
         fig = plot_link(logfile_path)
     elif log_type == "iperf":
         fig = plot_iperf(logfile_path, outlier_control=5)
 
+    # Optimize the plot for display in HTML format
     fig.update_layout(
         autosize=True,
         overwrite=True,
@@ -181,6 +219,7 @@ def process_text_file(logfile):
         "autosizable": True,
     }
 
+    # Save plot to HTML and return back to frontend
     plot_html = fig.to_html(config=config, full_html=False, include_plotlyjs=False)
     return plot_html
 
