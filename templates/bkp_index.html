@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Upload a log file</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".log">
+      <button type="submit">Upload and Process</button>
+    </form>
+
+    {% if images %}
+      <h2>Generated Images:</h2>
+      <div class="images">
+          <img src='/static/output/out.png' alt="Generated Image">
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>

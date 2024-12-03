@@ -1,0 +1,99 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body styling */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #ededed; /* Light background */
+    color: #1f1f1f; /* Dark text */
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden; /* Prevents scrollbars */
+  }
+  
+  /* Container styling */
+  .container {
+    max-width: 90vw; /* Allows the container to take up 90% of the viewport width */
+    max-height: 90vh; /* Allows the container to take up 90% of the viewport height */
+    width: 100%; /* Ensures the container spans the full width within max limits */
+    height: 100%; /* Ensures the container spans the full height within max limits */
+    padding: 20px;
+    background-color: #e1e1e1; /* Light background */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5); /* Light shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Plot container */
+  #plot-container {
+    width: 100%; /* Takes the full width of the parent */
+    height: auto; /* Adjusts the height automatically */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Ensure plot stretches and centers */
+  .plotly-plot {
+    width: 100%;
+    height: 100%;
+  }
+
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: #000000; /* Dark text */
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  /* Paragraphs */
+  p {
+    color: #1f1f1f; /* Dark text */
+    margin-bottom: 16px;
+  }
+  
+  /* Links */
+  a {
+    color: #0f4594; /* Dark blue for links */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #9dff00; /* Light green button */
+    color: #000000; /* Dark text */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #63a700;
+  }
+

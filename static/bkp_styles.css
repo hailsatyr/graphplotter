@@ -1,0 +1,101 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body styling */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+/* Container styling */
+.container {
+  max-width: 90vw; /* Allows the container to take up 90% of the viewport width */
+  max-height: 90vh; /* Allows the container to take up 90% of the viewport height */
+  width: 100%; /* Ensures the container spans the full width within max limits */
+  height: 100%; /* Ensures the container spans the full height within max limits */
+  padding: 20px;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content horizontally */
+  justify-content: center; /* Centers content vertically */
+  overflow: auto; /* Adds scrolling if content exceeds max height */
+}
+
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  /* Paragraphs */
+  p {
+    color: #e0e0e0;
+    margin-bottom: 16px;
+  }
+  
+  /* Links */
+  a {
+    color: #90caf9; /* Light blue for links */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #6200ee; /* Purple button */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #3700b3;
+  }
+
+  /* Centering and responsiveness for images */
+  .images {
+    display: flex;
+    justify-content: center; /* Center images horizontally */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .images img {
+    max-width: 100%; /* Make the image responsive to the screen size */
+    height: auto;
+    max-height: 80vh; /* Limit height so it fits within the viewport */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+  }
